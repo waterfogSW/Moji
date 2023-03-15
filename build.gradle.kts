@@ -3,22 +3,23 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id("org.springframework.boot") version "3.0.4"
     id("io.spring.dependency-management") version "1.1.0"
-    id("org.asciidoctor.jvm.convert") version "3.3.2"
     kotlin("jvm") version "1.8.0"
     kotlin("plugin.spring") version "1.8.0"
     kotlin("plugin.jpa") version "1.8.0"
     kotlin("kapt") version "1.8.0"
 }
 
+group = "com.waterfogsw"
+version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
-repositories {
-    mavenCentral()
+allprojects {
+    repositories {
+        mavenCentral()
+    }
 }
 
 subprojects {
-    group = "com.waterfogsw"
-    version = "0.0.1-SNAPSHOT"
 
     tasks.withType<KotlinCompile> {
         kotlinOptions {
@@ -38,13 +39,50 @@ subprojects {
     apply(plugin = "org.jetbrains.kotlin.plugin.spring")
     apply(plugin = "org.jetbrains.kotlin.plugin.jpa")
 
-    configurations {
-        compileOnly {
-            extendsFrom(configurations.annotationProcessor.get())
+    dependencies {
+        // kotlin
+        implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+        implementation("org.jetbrains.kotlin:kotlin-reflect")
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+
+        // kotlin test
+        testImplementation("io.mockk:mockk:1.13.2")
+        testImplementation("com.ninja-squad:springmockk:4.0.0")
+        testImplementation("io.kotest:kotest-runner-junit5:5.5.4")
+        testImplementation("io.kotest:kotest-assertions-core:5.5.4")
+        testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.2")
+        testImplementation("org.springframework.boot:spring-boot-starter-test")
+    }
+}
+
+extra["springCloudVersion"] = "2022.0.1"
+
+dependencyManagement {
+    imports {
+        mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
+        mavenBom("org.springframework.cloud:spring-cloud-dependencies:Hoxton.RELEASE")
+    }
+}
+
+project(":discovery-service") {
+    repositories {
+        maven {
+            url = uri("https://artifactory-oss.prod.netflix.net/artifactory/maven-oss-candidates")
         }
     }
 
-    repositories {
-        mavenCentral()
+    dependencies {
+        implementation("org.springframework.boot:spring-boot-starter-web")
+        implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-server:4.0.0")
+    }
+}
+
+tasks.withType<Test> {
+    useJUnitPlatform()
+}
+
+tasks {
+    bootJar {
+        enabled = false
     }
 }
