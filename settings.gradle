@@ -1,2 +1,5 @@
 rootProject.name = 'Messaging-Server'
-include("discovery-service")
+include(
+        "discovery-service",
+        "user-service"
+)
