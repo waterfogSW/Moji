@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  database:
+    container_name: Messaging-Server-user-service
+    image: mysql/mysql-server:8.0
+    environment:
+      MYSQL_DATABASE: "user_service"
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_ROOT_PASSWORD: 1234
+      TZ: Asia/Seoul
+    ports:
+      - "3360:3306"
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
