@@ -1,10 +1,24 @@
+server:
+  port: 8081
+
 spring:
+  application:
+    name: user-service
+
   jpa:
     hibernate:
       ddl-auto: create-drop
     show-sql: true
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3360/user_service
     username: root
     password: 1234
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka
