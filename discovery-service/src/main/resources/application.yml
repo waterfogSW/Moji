@@ -9,3 +9,6 @@ eureka:
   client:
     fetch-registry: false
     register-with-eureka: false
+  instance:
+    hostname: localhost:8081
+    appname: user-service
