@@ -55,34 +55,11 @@ subprojects {
     }
 }
 
-extra["springCloudVersion"] = "2022.0.1"
-
-dependencyManagement {
-    imports {
-        mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
-        mavenBom("org.springframework.cloud:spring-cloud-dependencies:Hoxton.RELEASE")
-    }
-}
-
-project(":discovery-service") {
-    repositories {
-        maven {
-            url = uri("https://artifactory-oss.prod.netflix.net/artifactory/maven-oss-candidates")
-        }
-    }
-
-    dependencies {
-        implementation("org.springframework.boot:spring-boot-starter-web")
-        implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-server:4.0.0")
-    }
-}
-
 project(":user-service") {
 
     dependencies {
         implementation("org.springframework.boot:spring-boot-starter-web")
         implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-        implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.0.0")
 
         // MySQL
         runtimeOnly("com.mysql:mysql-connector-j")
