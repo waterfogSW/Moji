@@ -1,5 +1,4 @@
 rootProject.name = 'Messaging-Server'
 include(
-        "discovery-service",
         "user-service"
 )
