@@ -1,4 +1,5 @@
 rootProject.name = 'Messaging-Server'
 include(
-        "user-service"
+        "user-service",
+        "common-lib",
 )
