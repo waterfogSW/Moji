@@ -1,4 +1,4 @@
-# Messaging-Server
+# Moji
 
 ## Convention
 

@@ -1,4 +1,4 @@
-rootProject.name = 'Messaging-Server'
+rootProject.name = 'Moji'
 include(
         "user-service",
         "common-lib",
